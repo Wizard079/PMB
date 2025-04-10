@@ -35,7 +35,7 @@ function App() {
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:8080'); // just connect to the ws 
+    ws.current = new WebSocket('ws://localhost:3001'); // just connect to the ws 
     ws.current.onopen = () => {
       console.log('WebSocket connection established');
     };
@@ -55,7 +55,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch('http://localhost:8080')
+    fetch('http://localhost:3001')
       .then(response => response.json())
       .then(data => {
         setAllMatches(data);
