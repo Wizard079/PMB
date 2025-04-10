@@ -4,7 +4,11 @@ import cors from "cors";
 
 const app = express();
 const port = 3000;
-var whitelist = ["http://localhost:5173", "http://localhost:5174"];
+var whitelist = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3001",
+];
 
 interface WsSubscribedTopic {
   [key: string]: string[];
@@ -15,16 +19,15 @@ const wsSubscribedTopics: WsSubscribedTopic = {};
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (whitelist.indexOf(origin as string) !== -1) {
+      if (!origin || whitelist.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(new Error(`Not allowed by CORS`));
       }
     },
   })
 );
 app.use(express.json());
-
 
 async function getMessagesFromDatabase(
   topic: string,
@@ -36,7 +39,7 @@ async function getMessagesFromDatabase(
   });
 }
 function sendToWs(topic: string, messageContent: string, method: string) {
-  console.log("Sending data to websokcet : ");
+  console.log("Sending data to websokcet");
   fetch("http://localhost:3001/publisher", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
