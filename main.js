@@ -2,7 +2,7 @@ let ws = new WebSocket('ws://localhost:8080');
 ws.onmessage = (msg) => console.log('Received:', msg.data);
 
 function publish(ws, topic, message) {
-    ws.send(JSON.stringify({ type: 'pub', topic: topic, message: message }));
+    ws.send(JSON.stringify({ type: 'pub', topic: topic, messageContent: message }));
     console.log("sending the info")
 }
 
