@@ -53,9 +53,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3001')
+    console.log("Requesting matches");
+    fetch('http://localhost:3000/matches')
       .then(response => response.json())
       .then(data => {
+        console.log("log: response ", data);
         setAllMatches(data);
       })
       .catch(error => {

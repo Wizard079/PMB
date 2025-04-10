@@ -159,21 +159,12 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": null,
-<<<<<<< HEAD
         "value": "file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db\"\n}\n\nmodel Matches {\n  id      Int    @id @default(autoincrement())\n  team1   String\n  team2   String\n  runs    Int\n  balls   Int\n  wickets Int\n  status  String\n}\n\nmodel Message {\n  id             Int    @id @default(autoincrement())\n  topic          String\n  messageContent String\n}\n",
-  "inlineSchemaHash": "049a0e75c6c34f364a59ef6e0f2beb26971a678c6cc80fbc8d16ea87d0237157",
-=======
-        "value": "file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db"
-      }
-    }
-  },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db\"\n}\n\nenum MatchStatus {\n  NOT_STARTED\n  IN_PROGRESS\n  COMPLETED\n}\n\nmodel Matches {\n  id      Int         @id @default(autoincrement())\n  team1   String\n  team2   String\n  runs    Int\n  balls   Int\n  wickets Int\n  status  MatchStatus\n}\n\nmodel Message {\n  id             Int    @id @default(autoincrement())\n  topic          String\n  messageContent String\n}\n",
-  "inlineSchemaHash": "e5c59d146b32172231081078820398b41ffe89619f4b232ecfb5da965e070d39",
->>>>>>> 1d7bb1943008bec56bc1b90bdc62a2cec860d507
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db\"\n}\n\nenum MatchStatus {\n  NOT_STARTED\n  IN_PROGRESS\n  COMPLETED\n}\n\nmodel Matches {\n  id      Int         @id @default(autoincrement())\n  team1   String\n  team2   String\n  runs    Int\n  balls   Int\n  wickets Int\n  status  MatchStatus\n}\n\nmodel Message {\n  id             Int    @id @default(autoincrement())\n  topic          String\n  messageContent String\n}\n",
+  "inlineSchemaHash": "b4f6c8f82f2d6ca49227bb4d7d6011fb83fdc13d0d521afc3f8c56730c0a123d",
   "copyEngine": true
 }
 config.dirname = '/'

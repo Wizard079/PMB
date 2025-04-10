@@ -108,14 +108,18 @@ app.post("/subscribe", async (req, res) => {
   const topic = req.body.topic;
   const limit = 6; // can change this latter now just hardcoding it for now
   if (typeof topic === "string") {
+    // console.log("log the req.ip is : ", req.ip, wsSubscribedTopics[topic]);
     if (wsSubscribedTopics[topic]?.includes(req.ip as string)) {
       res.status(400).json({ error: "Already subscribed" });
       return;
-    } else if (wsSubscribedTopics[topic]) {
-      wsSubscribedTopics[topic].push(req.ip as string);
     }
+
+    if (!wsSubscribedTopics[topic]) {
+      wsSubscribedTopics[topic] = [];
+    }
+    wsSubscribedTopics[topic].push(req.ip as string);
     const messages = await getMessagesFromDatabase(topic, limit);
-    console.log("Current message : ", messages);
+    // console.log("Current message : ", messages);
     res.status(200).json({ messages });
   } else {
     res.status(400).json({ error: "Invalid topic" });
@@ -154,5 +158,5 @@ app.post("/publish", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Broker running on ws://localhost:${port}`);
+  console.log(`Broker running on http://localhost:${port}`);
 });

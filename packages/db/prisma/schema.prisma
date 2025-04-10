@@ -1,21 +1,12 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/client"
 }
 
+
 datasource db {
   provider = "sqlite"
-<<<<<<< HEAD
   url      = "file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db"
-=======
-  url      = "file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db"
->>>>>>> 1d7bb1943008bec56bc1b90bdc62a2cec860d507
 }
 
 enum MatchStatus {
@@ -39,4 +30,3 @@ model Message{
   topic String
   messageContent String
 }
-
