@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../generated/client"
 }
 
 datasource db {
@@ -14,20 +14,14 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-enum MatchStatus {
-  NOT_STARTED
-  IN_PROGRESS
-  COMPLETED
-}
-
 model Matches {
-  id      Int         @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   team1   String
   team2   String
   runs    Int
   balls   Int
   wickets Int
-  status  MatchStatus
+  status  String
 }
 
 model Message {

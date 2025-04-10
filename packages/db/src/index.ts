@@ -1,9 +1,2 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-// Named exports (optional)
-export * from '@prisma/client';
-
-// Default export
-export default prisma;
+export { prisma } from './client' // exports instance of prisma 
+export * from "../generated/client" // exports generated types from prisma

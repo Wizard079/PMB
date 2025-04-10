@@ -1,5 +1,5 @@
 import express from "express";
-import db from "@repo/db/client"
+import { prisma } from "@repo/db"
 
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ interface WsSubscribedTopic {
 const wsSubscribedTopics: WsSubscribedTopic = {}
 
 app.get("/matches", async (req, res) => {
-	const matches = await db.matches.findMany();
+	const matches = await prisma.matches.findMany();
 	res.json(matches);
 })
 

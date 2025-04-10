@@ -2,12 +2,11 @@
   "name": "monorepo",
   "private": true,
   "scripts": {
-    "db:generate": "cd packages/db && prisma generate && cd ../..",
-    "build": "npm run db:generate && turbo build",
+    "build": "npx turbo db:generate && turbo build",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "dev": "turbo run dev"
+    "dev": "npx turbo db:generate && turbo run dev"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

@@ -25,24 +25,6 @@ export type Matches = $Result.DefaultSelection<Prisma.$MatchesPayload>
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
 
 /**
- * Enums
- */
-export namespace $Enums {
-  export const MatchStatus: {
-  NOT_STARTED: 'NOT_STARTED',
-  IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED'
-};
-
-export type MatchStatus = (typeof MatchStatus)[keyof typeof MatchStatus]
-
-}
-
-export type MatchStatus = $Enums.MatchStatus
-
-export const MatchStatus: typeof $Enums.MatchStatus
-
-/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -1011,7 +993,7 @@ export namespace Prisma {
     runs: number | null
     balls: number | null
     wickets: number | null
-    status: $Enums.MatchStatus | null
+    status: string | null
   }
 
   export type MatchesMaxAggregateOutputType = {
@@ -1021,7 +1003,7 @@ export namespace Prisma {
     runs: number | null
     balls: number | null
     wickets: number | null
-    status: $Enums.MatchStatus | null
+    status: string | null
   }
 
   export type MatchesCountAggregateOutputType = {
@@ -1174,7 +1156,7 @@ export namespace Prisma {
     runs: number
     balls: number
     wickets: number
-    status: $Enums.MatchStatus
+    status: string
     _count: MatchesCountAggregateOutputType | null
     _avg: MatchesAvgAggregateOutputType | null
     _sum: MatchesSumAggregateOutputType | null
@@ -1248,7 +1230,7 @@ export namespace Prisma {
       runs: number
       balls: number
       wickets: number
-      status: $Enums.MatchStatus
+      status: string
     }, ExtArgs["result"]["matches"]>
     composites: {}
   }
@@ -1678,7 +1660,7 @@ export namespace Prisma {
     readonly runs: FieldRef<"Matches", 'Int'>
     readonly balls: FieldRef<"Matches", 'Int'>
     readonly wickets: FieldRef<"Matches", 'Int'>
-    readonly status: FieldRef<"Matches", 'MatchStatus'>
+    readonly status: FieldRef<"Matches", 'String'>
   }
     
 
@@ -3105,13 +3087,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MatchStatus'
-   */
-  export type EnumMatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchStatus'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3131,7 +3106,7 @@ export namespace Prisma {
     runs?: IntFilter<"Matches"> | number
     balls?: IntFilter<"Matches"> | number
     wickets?: IntFilter<"Matches"> | number
-    status?: EnumMatchStatusFilter<"Matches"> | $Enums.MatchStatus
+    status?: StringFilter<"Matches"> | string
   }
 
   export type MatchesOrderByWithRelationInput = {
@@ -3154,7 +3129,7 @@ export namespace Prisma {
     runs?: IntFilter<"Matches"> | number
     balls?: IntFilter<"Matches"> | number
     wickets?: IntFilter<"Matches"> | number
-    status?: EnumMatchStatusFilter<"Matches"> | $Enums.MatchStatus
+    status?: StringFilter<"Matches"> | string
   }, "id">
 
   export type MatchesOrderByWithAggregationInput = {
@@ -3182,7 +3157,7 @@ export namespace Prisma {
     runs?: IntWithAggregatesFilter<"Matches"> | number
     balls?: IntWithAggregatesFilter<"Matches"> | number
     wickets?: IntWithAggregatesFilter<"Matches"> | number
-    status?: EnumMatchStatusWithAggregatesFilter<"Matches"> | $Enums.MatchStatus
+    status?: StringWithAggregatesFilter<"Matches"> | string
   }
 
   export type MessageWhereInput = {
@@ -3235,7 +3210,7 @@ export namespace Prisma {
     runs: number
     balls: number
     wickets: number
-    status: $Enums.MatchStatus
+    status: string
   }
 
   export type MatchesUncheckedCreateInput = {
@@ -3245,7 +3220,7 @@ export namespace Prisma {
     runs: number
     balls: number
     wickets: number
-    status: $Enums.MatchStatus
+    status: string
   }
 
   export type MatchesUpdateInput = {
@@ -3254,7 +3229,7 @@ export namespace Prisma {
     runs?: IntFieldUpdateOperationsInput | number
     balls?: IntFieldUpdateOperationsInput | number
     wickets?: IntFieldUpdateOperationsInput | number
-    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MatchesUncheckedUpdateInput = {
@@ -3264,7 +3239,7 @@ export namespace Prisma {
     runs?: IntFieldUpdateOperationsInput | number
     balls?: IntFieldUpdateOperationsInput | number
     wickets?: IntFieldUpdateOperationsInput | number
-    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MatchesCreateManyInput = {
@@ -3274,7 +3249,7 @@ export namespace Prisma {
     runs: number
     balls: number
     wickets: number
-    status: $Enums.MatchStatus
+    status: string
   }
 
   export type MatchesUpdateManyMutationInput = {
@@ -3283,7 +3258,7 @@ export namespace Prisma {
     runs?: IntFieldUpdateOperationsInput | number
     balls?: IntFieldUpdateOperationsInput | number
     wickets?: IntFieldUpdateOperationsInput | number
-    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MatchesUncheckedUpdateManyInput = {
@@ -3293,7 +3268,7 @@ export namespace Prisma {
     runs?: IntFieldUpdateOperationsInput | number
     balls?: IntFieldUpdateOperationsInput | number
     wickets?: IntFieldUpdateOperationsInput | number
-    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MessageCreateInput = {
@@ -3358,13 +3333,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type EnumMatchStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MatchStatus[]
-    notIn?: $Enums.MatchStatus[]
-    not?: NestedEnumMatchStatusFilter<$PrismaModel> | $Enums.MatchStatus
   }
 
   export type MatchesCountOrderByAggregateInput = {
@@ -3444,16 +3412,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type EnumMatchStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MatchStatus[]
-    notIn?: $Enums.MatchStatus[]
-    not?: NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMatchStatusFilter<$PrismaModel>
-    _max?: NestedEnumMatchStatusFilter<$PrismaModel>
-  }
-
   export type MessageCountOrderByAggregateInput = {
     id?: SortOrder
     topic?: SortOrder
@@ -3492,10 +3450,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type EnumMatchStatusFieldUpdateOperationsInput = {
-    set?: $Enums.MatchStatus
-  }
-
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -3519,13 +3473,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedEnumMatchStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MatchStatus[]
-    notIn?: $Enums.MatchStatus[]
-    not?: NestedEnumMatchStatusFilter<$PrismaModel> | $Enums.MatchStatus
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3570,16 +3517,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MatchStatus[]
-    notIn?: $Enums.MatchStatus[]
-    not?: NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMatchStatusFilter<$PrismaModel>
-    _max?: NestedEnumMatchStatusFilter<$PrismaModel>
   }
 
 
