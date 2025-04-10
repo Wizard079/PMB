@@ -134,7 +134,11 @@ exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
-
+exports.MatchStatus = exports.$Enums.MatchStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+};
 
 exports.Prisma.ModelName = {
   Matches: 'Matches',
