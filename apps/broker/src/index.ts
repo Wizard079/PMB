@@ -96,9 +96,9 @@ app.post("/match", async (req: Request, res: Response) => {
   return res.status(400).json({ error: "Invalid match data" });
 });
 
-app.get("/matches", async (req, res) => {
+app.get("/match", async (req, res) => {
   const matches = await prisma.matches.findMany();
-  res.json(matches);
+  res.status(200).json(matches);
 });
 
 app.post("/subscribe", async (req, res) => {
