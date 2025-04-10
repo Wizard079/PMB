@@ -127,7 +127,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/badboy/myEnv/tmp/PMB/packages/db/generated/client",
+      "value": "/home/adi/Desktop/New Folder/PMB/packages/db/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -136,12 +136,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-1.0.x",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/badboy/myEnv/tmp/PMB/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/home/adi/Desktop/New Folder/PMB/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
