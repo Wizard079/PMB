@@ -128,7 +128,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/adi/Desktop/New Folder/PMB/packages/db/generated/client",
+      "value": "/home/mansi/Desktop/PMB/packages/db/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -142,7 +142,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/adi/Desktop/New Folder/PMB/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/home/mansi/Desktop/PMB/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -160,12 +160,12 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": null,
-        "value": "file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db"
+        "value": "file:/home/mansi/Desktop/PMB/packages/db/prisma/dev.db"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db\"\n}\n\nenum MatchStatus {\n  NOT_STARTED\n  IN_PROGRESS\n  COMPLETED\n}\n\nmodel Matches {\n  id      Int         @id @default(autoincrement())\n  team1   String\n  team2   String\n  runs    Int\n  balls   Int\n  wickets Int\n  status  MatchStatus\n}\n\nmodel Message {\n  id             Int    @id @default(autoincrement())\n  topic          String\n  messageContent String\n}\n",
-  "inlineSchemaHash": "e5c59d146b32172231081078820398b41ffe89619f4b232ecfb5da965e070d39",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:/home/mansi/Desktop/PMB/packages/db/prisma/dev.db\"\n}\n\nenum MatchStatus {\n  NOT_STARTED\n  IN_PROGRESS\n  COMPLETED\n}\n\nmodel Matches {\n  id      Int         @id @default(autoincrement())\n  team1   String\n  team2   String\n  runs    Int\n  balls   Int\n  wickets Int\n  status  MatchStatus\n}\n\nmodel Message {\n  id             Int    @id @default(autoincrement())\n  topic          String\n  messageContent String\n}\n",
+  "inlineSchemaHash": "639ef11832527b5dfe589842e185ae90563cd0726a06ae3dd5041450030386a6",
   "copyEngine": true
 }
 
