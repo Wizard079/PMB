@@ -14,11 +14,6 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-enum MatchStatus{
-  NOT_STARTED
-  IN_PROGRESS
-  COMPLETED
-}
 
 model Matches{
   id Int @id @default(autoincrement())
@@ -27,7 +22,7 @@ model Matches{
   runs Int
   balls Int
   wickets Int
-  status MatchStatus
+  status String
 }
 
 model Message{
