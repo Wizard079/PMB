@@ -11,17 +11,27 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+<<<<<<< HEAD
   url      = "file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db"
+=======
+  url      = "file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db"
+}
+
+enum MatchStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+>>>>>>> 1d7bb1943008bec56bc1b90bdc62a2cec860d507
 }
 
 model Matches {
-  id      Int    @id @default(autoincrement())
+  id      Int         @id @default(autoincrement())
   team1   String
   team2   String
   runs    Int
   balls   Int
   wickets Int
-  status  String
+  status  MatchStatus
 }
 
 model Message {
