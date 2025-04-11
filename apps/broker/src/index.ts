@@ -108,14 +108,15 @@ app.get("/match", async (req, res) => {
 });
 
 app.put("/match/:matchId", async (req, res) => {
-  res.status(200).json({ message: "Match updated", matchId : req.params.matchId });
+  res
+    .status(200)
+    .json({ message: "Match updated", matchId: req.params.matchId });
 });
 
 app.post("/subscribe", async (req, res) => {
   const topic = req.body.topic;
   const limit = 6; // can change this latter now just hardcoding it for now
   if (typeof topic === "string") {
-    // console.log("log the req.ip is : ", req.ip, wsSubscribedTopics[topic]);
     if (wsSubscribedTopics[topic]?.includes(req.ip as string)) {
       res.status(400).json({ error: "Already subscribed" });
       return;
@@ -127,6 +128,7 @@ app.post("/subscribe", async (req, res) => {
     wsSubscribedTopics[topic].push(req.ip as string);
     const messages = await getMessagesFromDatabase(topic, limit);
     // console.log("Current message : ", messages);
+    console.log("log the req.ip is : ", req.ip, req.url, wsSubscribedTopics);
     res.status(200).json({ messages });
   } else {
     res.status(400).json({ error: "Invalid topic" });
@@ -134,29 +136,60 @@ app.post("/subscribe", async (req, res) => {
 });
 
 app.get("/unsubscribe", (req, res) => {
+  if (Object.keys(wsSubscribedTopics).length === 0) {
+    res
+      .status(400)
+      .json({ msg: "No active subscriptions to unsubscribe from." });
+    return;
+  }
   Object.keys(wsSubscribedTopics).forEach((topic) => {
     if (Array.isArray(wsSubscribedTopics[topic])) {
       wsSubscribedTopics[topic] = wsSubscribedTopics[topic].filter(
         (ip) => ip !== req.ip
       );
     } else {
-      console.log(`No subscribers for topic: ${topic}`);
+      console.log(`log : No subscribers for topic: ${topic}`);
     }
   });
-  console.log("Unsubscribe done ");
   res.status(200).json({ msg: "Unsubscribe done" });
 });
 
-app.post("/publish", (req, res) => {
+app.post("/publish", async (req, res) => {
   console.log(req.body);
-  const { topic, messageContent } = req.body;
-  let method = req.body.method || "max_once";
-  
+  const { id, status } = req.body;
+  let method;
+  let messageContent;
+  if (status === "NOT_STARTED") {
+    console.log("Match started")
+    await prisma.matches.update({
+      where: { id: Number(id) },
+      data: { status: MatchStatus.IN_PROGRESS },
+    });
+    method = "at_least_once";
+    messageContent = {
+      status: MatchStatus.NOT_STARTED,
+    };
+  } else if (status === "COMPLETED") {
+    await prisma.matches.update({
+      where: { id: Number(id) },
+      data: { status: MatchStatus.COMPLETED },
+    });
+    method = "at_least_once";
+    messageContent = {
+      status: MatchStatus.COMPLETED
+    };
+  }else{
+    method = "at_least_once";
+    messageContent = {
+      ...req.body,
+    };
+  }
+  messageContent = JSON.stringify(messageContent)
   try {
     if (method === "at_least_once") {
-      saveMessageToDatabase(topic, messageContent);
+      saveMessageToDatabase(String(id), messageContent);
     }
-    sendToWs(topic, messageContent, method);
+    sendToWs(String(id), messageContent, method);
   } catch (e) {
     console.error("there is an error ", e);
   }

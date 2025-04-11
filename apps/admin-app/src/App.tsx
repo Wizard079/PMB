@@ -16,8 +16,8 @@ interface Match {
   balls2: number
   wickets2: number
 }
-const NUM_OVERS  = 3
-const typeofBalls = ["1", "2", "3", "4", "6", "W", "NB", "WD"]
+const NUM_OVERS = 3
+const typeofBalls = ["1", "2", "3", "4", "6", "W"]
 
 function App() {
 
@@ -31,29 +31,107 @@ function App() {
 
   async function statusChange() {
     if (currentMatch) {
+
       if (currentMatch.status === "NOT_STARTED") {
-        const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
-          status: "IN_PROGRESS"
+        setCurrentMatch((match) => {
+          if (!match) return null;
+
+          setMatches((matches) => {
+            return matches.map((currmatch) => {
+              if (currmatch === match) {
+                return {
+                  ...match,
+                  status: "IN_PROGRESS"
+                };
+              } else {
+                return currmatch;
+              }
+            });
+          });
+
+
+          return {
+            ...match,
+            status: "IN_PROGRESS"
+          };
         })
-        console.log(res.data)
-      }
-      if (currentMatch.status === "IN_PROGRESS") {
-        const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
+        await axios.post(`http://localhost:3000/publish`, {
+          id: currentMatch.id,
+          status: "NOT_STARTED"
+        })
+
+
+      } else if (currentMatch.status === "IN_PROGRESS") {
+        setCurrentMatch((match) => {
+          if (!match) return null;
+
+          setMatches((matches) => {
+            return matches.map((currmatch) => {
+              if (currmatch === match) {
+                return {
+                  ...match,
+                  status: "COMPLETED"
+                };
+              } else {
+                return currmatch;
+              }
+            });
+          });
+          return {
+            ...match,
+            status: "COMPLETED"
+          };
+        })
+        await axios.post(`http://localhost:3000/publish`, {
+          id: currentMatch.id,
           status: "COMPLETED"
         })
+
       }
     }
   }
 
-  async function updateMatch() {
+  async function updateMatch(ball: string) {
     if (currentMatch) {
-      const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
-        runs: currentRuns,
-        balls: currentBall,
-        wickets: currentWickets
-      })
-      console.log(res.data)
-      
+      if (currentMatch.balls1 < NUM_OVERS * 6 && currentMatch.wickets1 < 10) {
+        if (ball === "W") {
+          const res = await axios.post(`http://localhost:3000/publish`, {
+            id: currentMatch.id,
+            runs1: currentRuns,
+            balls1: currentBall + 1,
+            wickets1: currentWickets + 1,
+            run2: currentMatch.runs2,
+            balls2: currentMatch.balls2,
+            wickets2: currentMatch.wickets2,
+            status: "IN_PROGRESS",
+            type: ball
+          })
+          setCurrentWickets((wickets) => wickets + 1)
+          setCurrentBall((ball) => ball + 1)
+          console.log(res.data)
+
+          if (currentWickets === 10) {
+            setCurrentBall(0)
+            setCurrentRuns(0)
+            setCurrentWickets(0)
+          }
+        } else {
+          const res = await axios.post(`http://localhost:3000/publish`, {
+            id: currentMatch.id,
+            runs1: currentRuns + Number(ball),
+            balls1: currentBall + 1,
+            wickets1: currentWickets,
+            run2: currentMatch.runs2,
+            balls2: currentMatch.balls2,
+            wickets2: currentMatch.wickets2,
+            status: "IN_PROGRESS",
+            type: ball
+          })
+          setCurrentBall((ball) => ball + 1)
+          setCurrentRuns((runs) => runs + Number(ball))
+          console.log(res.data)
+        }
+      }
     }
   }
   useEffect(() => {
@@ -92,6 +170,9 @@ function App() {
                     <button onClick={() => {
                       setCurrentMatch(match)
                       setIsModalOpen(true)
+                      setCurrentBall((match.balls1 == NUM_OVERS * 6 || match.wickets1 == 10) ? match.balls2 : match.balls1)
+                      setCurrentRuns((match.balls1 == NUM_OVERS * 6 || match.wickets1 == 10) ? match.runs2 : match.runs1)
+                      setCurrentWickets((match.balls1 == NUM_OVERS * 6 || match.wickets1 == 10) ? match.wickets2 : match.wickets1)
                       // setCurrentBall(match.balls1 + match.balls2)
                     }} className="bg-green-900 w-[150px] text-white px-4 py-2 rounded-lg hover:bg-green-950">
                       View Match
@@ -123,18 +204,14 @@ function App() {
                 currentMatch.status === "IN_PROGRESS" && (
                   <>
                     <div className="flex gap-10 justify-between">
-                      <div className="text-[20px] text-green-900">Runs: {currentMatch?.runs}</div>
-                      <div className="text-[20px] text-green-900">Wickets: {currentMatch?.wickets}</div>
-                      <div className="text-[20px] text-green-900">Balls: {currentMatch?.balls}</div>
+                      <div className="text-[20px] text-green-900">Runs: {currentMatch?.runs1}</div>
+                      <div className="text-[20px] text-green-900">Wickets: {currentMatch?.wickets1}</div>
+                      <div className="text-[20px] text-green-900">Balls: {currentMatch?.balls1}</div>
                     </div>
                     <div className="flex gap-5">
                       {typeofBalls.map((ball) => (
                         <button key={ball} onClick={() => {
-                          if (ball === "W") {
-                            setCurrentWickets(currentWickets + 1)
-                          } else {
-                            setCurrentRuns(currentRuns + parseInt(ball))
-                          }
+                          
                         }} className="bg-green-900 text-white px-4 py-2 rounded-lg hover:bg-green-950">
                           {ball}
                         </button>

@@ -15,11 +15,7 @@ interface SubscriberArray {
   [key: string]: WebSocket[];
 }
 
-type ToSendMessage = {
-  [topic: string]: WebSocket[];
-};
-
-const toSendMessage: ToSendMessage = {};
+const toSendMessage: SubscriberArray = {};
 const topicSubscribers: SubscriberArray = {};
 
 function subscribeToBroker(topic: string, ws: WebSocket) {
@@ -32,6 +28,10 @@ function subscribeToBroker(topic: string, ws: WebSocket) {
     .then((data) => {
       console.log(data);
       if (Array.isArray(data.messages)) {
+        if (data.messages.length === 0) {
+          console.log("No messages received. for ", topic);
+          return;
+        }
         data.messages.forEach((msg: any) => {
           ws.send(
             JSON.stringify({ topic, messageContent: msg.messageContent })
@@ -54,10 +54,10 @@ wss.on("connection", (ws: WebSocket) => {
       const parseMsg = JSON.parse(msg.toString());
       const { topic, type } = parseMsg;
 
-      if (type === "ack") {
-        if (toSendMessage[topic]) {
+      if (type === "ACK") {
+        if (Array.isArray(toSendMessage) && toSendMessage[topic].length !== 0) {
           toSendMessage[topic] = toSendMessage[topic].filter(
-            (sub) => sub !== ws
+            (sub: WebSocket) => sub !== ws
           );
         }
       }
@@ -78,7 +78,10 @@ wss.on("connection", (ws: WebSocket) => {
   });
   ws.on("close", () => {
     Object.keys(topicSubscribers).forEach((topic) => {
-      if (Array.isArray(topicSubscribers[topic])) {
+      if (
+        Array.isArray(topicSubscribers[topic]) &&
+        topicSubscribers[topic].length !== 0
+      ) {
         topicSubscribers[topic] = topicSubscribers[topic].filter(
           (sub) => sub !== ws
         );
@@ -104,12 +107,18 @@ function atLeastOnce(topic: string, messageContent: string) {
   if (topicSubscribers[topic]) {
     topicSubscribers[topic].forEach((subscriber) => {
       try {
-        subscriber.send(messageContent);
-        // Save for retry in case no ACK is received
+        subscriber.send(
+          JSON.stringify({
+            topic,
+            messageContent: messageContent,
+            method: "at_least_once",
+          })
+        );
         if (!toSendMessage[topic]) {
           toSendMessage[topic] = [];
         }
         toSendMessage[topic].push(subscriber);
+        console.log("ws-server/log : toSendMessage", toSendMessage);
       } catch (err) {
         console.error("Send failed:", err);
       }
