@@ -179,10 +179,28 @@ app.post("/publish", async (req, res) => {
       status: MatchStatus.COMPLETED
     };
   }else{
-    method = "at_least_once";
+    method = "max_once";
+    const ball = req.body.type;
+    if( ball === "6" || "4" || "W"){
+      method = "at_least_once"
+    }
+
     messageContent = {
       ...req.body,
     };
+
+    const data = req.body
+    delete data.type
+    delete data.id
+
+    console.log(data)
+    await prisma.matches.update({
+      where:{
+        id: Number(id)
+      },
+      data
+    })
+    
   }
   messageContent = JSON.stringify(messageContent)
   try {

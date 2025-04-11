@@ -95,22 +95,63 @@ function App() {
     if (currentMatch) {
       if (currentMatch.balls1 < NUM_OVERS * 6 && currentMatch.wickets1 < 10) {
         if (ball === "W") {
-          const res = await axios.post(`http://localhost:3000/publish`, {
-            id: currentMatch.id,
-            runs1: currentRuns,
-            balls1: currentBall + 1,
-            wickets1: currentWickets + 1,
-            run2: currentMatch.runs2,
-            balls2: currentMatch.balls2,
-            wickets2: currentMatch.wickets2,
-            status: "IN_PROGRESS",
-            type: ball
+          // const res = await axios.post(`http://localhost:3000/publish`, {
+          //   id: currentMatch.id,
+          //   team1: currentMatch.team1,
+          //   team2: currentMatch.team2,
+          //   runs1: currentRuns,
+          //   balls1: currentBall + 1,
+          //   wickets1: currentWickets + 1,
+          //   runs2: currentMatch.runs2,
+          //   balls2: currentMatch.balls2,
+          //   wickets2: currentMatch.wickets2,
+          //   status: "IN_PROGRESS",
+          //   type: ball
+          // })
+
+          setCurrentMatch((match) => {
+            if (!match) return null;
+            axios.post(`http://localhost:3000/publish`, {
+              id: match.id,
+              team1: match.team1,
+              team2: match.team2,
+              runs1: match.runs1,
+              balls1: match.balls1 + 1,
+              wickets1: match.wickets1 + 1,
+              runs2: match.runs2,
+              balls2: match.balls2,
+              wickets2: match.wickets2,
+              status: "IN_PROGRESS",
+              type: ball
+            })
+            setMatches((matches) => {
+              return matches.map((currmatch) => {
+                if (currmatch === match) {
+                  return {
+                    ...currmatch,
+                    balls1: currmatch.balls1 + 1,
+                    wickets1: currmatch.wickets1 + 1,
+                  };
+                } else {
+                  return currmatch;
+                }
+              });
+            });
+
+
+            return {
+              ...match,
+              balls1: match.balls1 + 1,
+              wickets1: match.wickets1 + 1,
+            };
           })
+
+
           setCurrentWickets((wickets) => wickets + 1)
           setCurrentBall((ball) => ball + 1)
-          console.log(res.data)
+          // console.log(res.data)
 
-          if (currentWickets === 10) {
+          if (currentMatch.wickets1 + 1 === 10 || currentMatch.balls1 + 1=== NUM_OVERS * 6) {
             setCurrentBall(0)
             setCurrentRuns(0)
             setCurrentWickets(0)
@@ -118,10 +159,12 @@ function App() {
         } else {
           const res = await axios.post(`http://localhost:3000/publish`, {
             id: currentMatch.id,
+            team1: currentMatch.team1,
+            team2: currentMatch.team2,
             runs1: currentRuns + Number(ball),
             balls1: currentBall + 1,
             wickets1: currentWickets,
-            run2: currentMatch.runs2,
+            runs2: currentMatch.runs2,
             balls2: currentMatch.balls2,
             wickets2: currentMatch.wickets2,
             status: "IN_PROGRESS",
@@ -130,6 +173,147 @@ function App() {
           setCurrentBall((ball) => ball + 1)
           setCurrentRuns((runs) => runs + Number(ball))
           console.log(res.data)
+
+          setCurrentMatch((match) => {
+            if (!match) return null;
+
+            setMatches((matches) => {
+              return matches.map((currmatch) => {
+                if (currmatch === match) {
+                  return {
+                    ...match,
+                    balls1: match.balls1 + 1,
+                    runs1: match.runs1 + Number(ball),
+                  };
+                } else {
+                  return currmatch;
+                }
+              });
+            });
+
+
+            return {
+              ...match,
+              balls1: match.balls1 + 1,
+              runs1: match.runs1 + Number(ball),
+            };
+          })
+        }
+
+        if (currentMatch.balls1 + 1=== NUM_OVERS * 6) {
+          setCurrentBall(0)
+          setCurrentRuns(0)
+          setCurrentWickets(0)
+        }
+      } else if (currentMatch.balls2 < NUM_OVERS * 6 || currentMatch.wickets2 < 10) {
+        if (ball === "W") {
+          let customStat = "IN_PROGRESS"
+          if (currentWickets + 1 === 10 || currentBall === NUM_OVERS * 6) customStat = "COMPLETED"
+          const res = await axios.post(`http://localhost:3000/publish`, {
+            id: currentMatch.id,
+            team1: currentMatch.team1,
+            team2: currentMatch.team2,
+            runs1: currentMatch.runs1,
+            balls1: currentMatch.balls1,
+            wickets1: currentMatch.wickets1,
+            runs2: currentRuns,
+            balls2: currentBall + 1,
+            wickets2: currentWickets + 1,
+            status: customStat,
+            type: ball
+          })
+
+          setCurrentMatch((match) => {
+            if (!match) return null;
+
+            setMatches((matches) => {
+              return matches.map((currmatch) => {
+                if (currmatch === match) {
+                  return {
+                    ...match,
+                    balls2: match.balls2 + 1,
+                    wickets2: match.wickets2 + 1,
+                    status: customStat
+                  };
+                } else {
+                  return currmatch;
+                }
+              });
+            });
+
+
+            return {
+              ...match,
+              balls2: match.balls2 + 1,
+              wickets2: match.wickets2 + 1,
+              status: customStat
+            };
+          })
+
+
+          setCurrentWickets((wickets) => wickets + 1)
+          setCurrentBall((ball) => ball + 1)
+          console.log(res.data)
+
+          if (currentMatch.wickets2 + 1 === 10 || currentMatch.balls2 + 1 === NUM_OVERS * 6) {
+            setCurrentBall(0)
+            setCurrentRuns(0)
+            setCurrentWickets(0)
+          }
+        } else {
+
+          let customStat = "IN_PROGRESS"
+          if (currentBall === NUM_OVERS * 6) customStat = "COMPLETED"
+
+          const res = await axios.post(`http://localhost:3000/publish`, {
+            id: currentMatch.id,
+            team1: currentMatch.team1,
+            team2: currentMatch.team2,
+            runs1: currentMatch.runs1,
+            balls1: currentMatch.balls1,
+            wickets1: currentMatch.wickets1,
+            runs2: currentRuns + Number(ball),
+            balls2: currentBall,
+            wickets2: currentWickets,
+            status: customStat,
+            type: ball
+          })
+          setCurrentBall((ball) => ball + 1)
+          setCurrentRuns((runs) => runs + Number(ball))
+          console.log(res.data)
+
+          setCurrentMatch((match) => {
+            if (!match) return null;
+
+            setMatches((matches) => {
+              return matches.map((currmatch) => {
+                if (currmatch === match) {
+                  return {
+                    ...match,
+                    balls2: match.balls2 + 1,
+                    runs2: match.runs2 + Number(ball),
+                    status: customStat
+                  };
+                } else {
+                  return currmatch;
+                }
+              });
+            });
+
+
+            return {
+              ...match,
+              balls2: match.balls2 + 1,
+              runs2: match.runs2 + Number(ball),
+              status: customStat
+            };
+          })
+
+          if (currentMatch.balls2 + 1 === NUM_OVERS * 6) {
+            setCurrentBall(0)
+            setCurrentRuns(0)
+            setCurrentWickets(0)
+          }
         }
       }
     }
@@ -203,15 +387,14 @@ function App() {
               {
                 currentMatch.status === "IN_PROGRESS" && (
                   <>
-                    <div className="flex gap-10 justify-between">
-                      <div className="text-[20px] text-green-900">Runs: {currentMatch?.runs1}</div>
-                      <div className="text-[20px] text-green-900">Wickets: {currentMatch?.wickets1}</div>
-                      <div className="text-[20px] text-green-900">Balls: {currentMatch?.balls1}</div>
+                    <div className="flex gap-20 justify-between">
+                      <div className="text-[20px] text-green-900">{currentMatch?.runs1}/{currentMatch?.wickets1} in {Math.floor(currentMatch?.balls1 / 6)}.{currentMatch?.balls1 % 6}</div>
+                      <div className="text-[20px] text-green-900">{currentMatch?.runs2}/{currentMatch?.wickets2} in {Math.floor(currentMatch?.balls2 / 6)}.{currentMatch?.balls2 % 6}</div>
                     </div>
                     <div className="flex gap-5">
                       {typeofBalls.map((ball) => (
                         <button key={ball} onClick={() => {
-                          
+                          updateMatch(ball)
                         }} className="bg-green-900 text-white px-4 py-2 rounded-lg hover:bg-green-950">
                           {ball}
                         </button>
