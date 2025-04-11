@@ -85,11 +85,6 @@ function App() {
                 <div key={match.id} className="bg-white flex-shrink-0 w-full h-[125px] rounded-lg shadow-md flex justify-center items-center">
                   <div className="text-center flex flex-col items-center gap-4 w-full">
                     <div className="text-[20px] text-green-900 flex justify-center gap-10 w-full">
-                      {/* <div className="text-[20px]">
-                        {match.status === "NOT_STARTED" && <span className="text-red-500">Not Started</span>}
-                        {match.status === "IN_PROGRESS" && <span className="text-yellow-500">In Progress</span>}
-                        {match.status === "COMPLETED" && <span className="text-green-500">Completed</span>}
-                      </div> */}
                       <div>{match.team1}</div>
                       <div>vs</div>
                       <div>{match.team2}</div>

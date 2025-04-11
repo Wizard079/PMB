@@ -68,6 +68,7 @@ function App() {
     if (ws.current) {
       console.log("Subscribing to:", id);
       ws.current.send(JSON.stringify({ type: 'sub', topic: id }));
+      alert(`Subscribed to Match Id: ${id}`)
     }
   }
 
@@ -156,7 +157,7 @@ function App() {
               {allMatches.map((match) => (
                 <li
                   key={match.id}
-                  // onClick={() => subscribe(match.id)}
+                  onClick={() => subscribe(match.id.toString())}
                   className="cursor-pointer p-4 bg-gray-700 rounded hover:bg-gray-600 transition-colors w-full max-w-md"
                 >
                   <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} VS {match.team2}</h2>

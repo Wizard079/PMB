@@ -150,9 +150,8 @@ app.get("/unsubscribe", (req, res) => {
 app.post("/publish", (req, res) => {
   console.log(req.body);
   const { topic, messageContent } = req.body;
-  const method = req.body.method || "max_once";
-  // console.log("log : the method is  ", method);
-  // console.log("log : the topic is  ", topic);
+  let method = req.body.method || "max_once";
+  
   try {
     if (method === "at_least_once") {
       saveMessageToDatabase(topic, messageContent);
