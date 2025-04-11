@@ -15,6 +15,11 @@ interface SubscriberArray {
   [key: string]: WebSocket[];
 }
 
+type ToSendMessage = {
+  [topic: string]: WebSocket[];
+};
+
+const toSendMessage: ToSendMessage = {};
 const topicSubscribers: SubscriberArray = {};
 
 function subscribeToBroker(topic: string, ws: WebSocket) {
@@ -40,7 +45,6 @@ function subscribeToBroker(topic: string, ws: WebSocket) {
 function unsubscribe() {
   fetch("http://localhost:3000/unsubscribe", {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
   }).catch(console.error);
 }
 
@@ -48,21 +52,15 @@ wss.on("connection", (ws: WebSocket) => {
   ws.on("message", (msg) => {
     try {
       const parseMsg = JSON.parse(msg.toString());
-      const topic = parseMsg.topic;
+      const { topic, type } = parseMsg;
 
-      // TODO : ack handle
-      // const type = parseMsg.type || '';
-      // if (type === "ack") {
-      //   Object.keys(toSendMessage).forEach((topic) => {
-      //     if (Array.isArray(topicSubscribers[topic])) {
-      //       topicSubscribers[topic] = topicSubscribers[topic].filter(
-      //         (sub) => sub !== ws
-      //       );
-      //     } else {
-      //       console.log(`No subscribers for topic: ${topic}`);
-      //     }
-      //   });
-      // }
+      if (type === "ack") {
+        if (toSendMessage[topic]) {
+          toSendMessage[topic] = toSendMessage[topic].filter(
+            (sub) => sub !== ws
+          );
+        }
+      }
       try {
         if (typeof topic !== "string") throw new Error("topic is not a string");
         if (topicSubscribers[topic] && !topicSubscribers[topic].includes(ws)) {
@@ -71,8 +69,6 @@ wss.on("connection", (ws: WebSocket) => {
           topicSubscribers[topic] = [ws];
           subscribeToBroker(topic, ws);
         }
-
-        console.log(topicSubscribers[topic].length);
       } catch (e) {
         console.error("there is an error ", e);
       }
@@ -107,15 +103,16 @@ function atMaxOnce(topic: string, messageContent: string) {
 function atLeastOnce(topic: string, messageContent: string) {
   if (topicSubscribers[topic]) {
     topicSubscribers[topic].forEach((subscriber) => {
-      subscriber.send(
-        JSON.stringify({ topic, messageContent: messageContent })
-      );
-
-      // if (toSendMessage[msgId] && !toSendMessage[msgId].includes(subscriber)) {
-      //   toSendMessage[msgId].push(subscriber);
-      // } else if (!toSendMessage[msgId]) {
-      //   toSendMessage[msgId] = [subscriber];
-      // }
+      try {
+        subscriber.send(messageContent);
+        // Save for retry in case no ACK is received
+        if (!toSendMessage[topic]) {
+          toSendMessage[topic] = [];
+        }
+        toSendMessage[topic].push(subscriber);
+      } catch (err) {
+        console.error("Send failed:", err);
+      }
     });
   }
 }

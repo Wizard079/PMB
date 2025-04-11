@@ -163,7 +163,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": null,
-        "value": "file:/home/adi/Desktop/New Folder/PMB/packages/db/prisma/dev.db"
+        "value": "file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db"
       }
     }
   },
