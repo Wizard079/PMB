@@ -1,10 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { Bell, X, ArrowLeftCircle } from 'lucide-react';
+import axios from "axios"
 
-type Match = {
-  id: string;
-  matchName: string;
-};
+
+interface Match {
+  id: number
+  team1: string
+  team2: string
+  runs: number
+  balls: number
+  wickets: number
+}
 
 type Score = {
   team1Name: string;
@@ -47,23 +53,16 @@ function App() {
         setNotifications((prev) => [...prev, data.messageContent]);
       }
     };
-
-    // preset match until API fetch completes
-    setAllMatches([{ id: "qwery1234", matchName: 'RCB vs SRH' }]);
   }, []);
 
   useEffect(() => {
-    console.log("Requesting matches");
-    fetch('http://localhost:3000/matches')
-      .then(response => response.json())
-      .then(data => {
-        console.log("log: response ", data);
-        setAllMatches(data);
-      })
-      .catch(error => {
-        console.error('Error fetching matches:', error);
-      });
-  }, []);
+    async function fetchMatches() {
+      const res = await axios.get(`http://localhost:3000/match`)
+      console.log(res.data)
+      setAllMatches(res.data)
+    }
+    fetchMatches()
+  }, [])
 
   function subscribe(id: string) {
     if (ws.current) {
@@ -157,10 +156,10 @@ function App() {
               {allMatches.map((match) => (
                 <li
                   key={match.id}
-                  onClick={() => subscribe(match.id)}
+                  // onClick={() => subscribe(match.id)}
                   className="cursor-pointer p-4 bg-gray-700 rounded hover:bg-gray-600 transition-colors w-full max-w-md"
                 >
-                  <h2 className="text-xl font-semibold text-blue-200 text-center">{match.matchName}</h2>
+                  <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} VS {match.team2}</h2>
                   <p className="text-sm text-gray-300 text-center">{match.id}</p>
                 </li>
               ))}

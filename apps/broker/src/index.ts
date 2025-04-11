@@ -85,9 +85,12 @@ app.post("/match", async (req: Request, res: Response) => {
     if (!existingMatch) {
       await prisma.matches.create({
         data: {
-          wickets: 0,
-          balls: 0,
-          runs: 0,
+          wickets1: 0,
+          wickets2: 0,
+          balls1: 0,
+          balls2: 0,
+          runs1: 0,
+          runs2: 0,
           team1,
           team2,
           status: MatchStatus.NOT_STARTED,
@@ -99,9 +102,13 @@ app.post("/match", async (req: Request, res: Response) => {
   return res.status(400).json({ error: "Invalid match data" });
 });
 
-app.get("/matches", async (req, res) => {
+app.get("/match", async (req, res) => {
   const matches = await prisma.matches.findMany();
-  res.json(matches);
+  res.status(200).json(matches);
+});
+
+app.put("/match/:matchId", async (req, res) => {
+  res.status(200).json({ message: "Match updated", matchId : req.params.matchId });
 });
 
 app.post("/subscribe", async (req, res) => {
