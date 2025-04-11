@@ -85,9 +85,12 @@ app.post("/match", async (req: Request, res: Response) => {
     if (!existingMatch) {
       await prisma.matches.create({
         data: {
-          wickets: 0,
-          balls: 0,
-          runs: 0,
+          wickets1: 0,
+          wickets2: 0,
+          balls1: 0,
+          balls2: 0,
+          runs1: 0,
+          runs2: 0,
           team1,
           team2,
           status: MatchStatus.NOT_STARTED,

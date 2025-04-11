@@ -32,13 +32,13 @@ function App() {
   async function statusChange() {
     if (currentMatch) {
       if (currentMatch.status === "NOT_STARTED") {
-        const res = await axios.post(`http://localhost:3000/match/${currentMatch.id}`, {
+        const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
           status: "IN_PROGRESS"
         })
         console.log(res.data)
       }
       if (currentMatch.status === "IN_PROGRESS") {
-        const res = await axios.post(`http://localhost:3000/match/${currentMatch.id}`, {
+        const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
           status: "COMPLETED"
         })
       }
@@ -47,19 +47,13 @@ function App() {
 
   async function updateMatch() {
     if (currentMatch) {
-      // if()
-      const res = await axios.post(`http://localhost:3000/match/${currentMatch.id}`, {
+      const res = await axios.put(`http://localhost:3000/match/${currentMatch.id}`, {
         runs: currentRuns,
         balls: currentBall,
         wickets: currentWickets
       })
       console.log(res.data)
-      // setCurrentMatch({
-      //   ...currentMatch,
-      //   runs: currentRuns,
-      //   balls: currentBall,
-      //   wickets: currentWickets
-      // })
+      
     }
   }
   useEffect(() => {

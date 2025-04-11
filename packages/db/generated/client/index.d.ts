@@ -3301,26 +3301,26 @@ export namespace Prisma {
   export type MatchesCreateInput = {
     team1: string
     team2: string
-    runs1: number
-    balls1: number
-    wickets1: number
-    runs2: number
-    balls2: number
-    wickets2: number
-    status: $Enums.MatchStatus
+    runs1?: number
+    balls1?: number
+    wickets1?: number
+    runs2?: number
+    balls2?: number
+    wickets2?: number
+    status?: $Enums.MatchStatus
   }
 
   export type MatchesUncheckedCreateInput = {
     id?: number
     team1: string
     team2: string
-    runs1: number
-    balls1: number
-    wickets1: number
-    runs2: number
-    balls2: number
-    wickets2: number
-    status: $Enums.MatchStatus
+    runs1?: number
+    balls1?: number
+    wickets1?: number
+    runs2?: number
+    balls2?: number
+    wickets2?: number
+    status?: $Enums.MatchStatus
   }
 
   export type MatchesUpdateInput = {
@@ -3352,13 +3352,13 @@ export namespace Prisma {
     id?: number
     team1: string
     team2: string
-    runs1: number
-    balls1: number
-    wickets1: number
-    runs2: number
-    balls2: number
-    wickets2: number
-    status: $Enums.MatchStatus
+    runs1?: number
+    balls1?: number
+    wickets1?: number
+    runs2?: number
+    balls2?: number
+    wickets2?: number
+    status?: $Enums.MatchStatus
   }
 
   export type MatchesUpdateManyMutationInput = {
