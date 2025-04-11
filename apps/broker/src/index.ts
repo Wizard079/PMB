@@ -25,7 +25,6 @@ app.use(
 );
 app.use(express.json());
 
-
 async function getMessagesFromDatabase(
   topic: string,
   limit: number
@@ -99,6 +98,10 @@ app.post("/match", async (req: Request, res: Response) => {
 app.get("/match", async (req, res) => {
   const matches = await prisma.matches.findMany();
   res.status(200).json(matches);
+});
+
+app.put("/match/:matchId", async (req, res) => {
+  res.status(200).json({ message: "Match updated", matchId : req.params.matchId });
 });
 
 app.post("/subscribe", async (req, res) => {

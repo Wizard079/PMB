@@ -24,10 +24,13 @@ model Matches {
   id      Int         @id @default(autoincrement())
   team1   String
   team2   String
-  runs    Int
-  balls   Int
-  wickets Int
-  status  MatchStatus
+  runs1    Int @default(0)
+  balls1   Int @default(0)
+  wickets1 Int @default(0) 
+  runs2    Int @default(0)
+  balls2   Int @default(0)
+  wickets2 Int @default(0)
+  status  MatchStatus @default(NOT_STARTED)
 }
 
 model Message {

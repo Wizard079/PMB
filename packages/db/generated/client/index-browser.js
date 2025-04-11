@@ -118,9 +118,12 @@ exports.Prisma.MatchesScalarFieldEnum = {
   id: 'id',
   team1: 'team1',
   team2: 'team2',
-  runs: 'runs',
-  balls: 'balls',
-  wickets: 'wickets',
+  runs1: 'runs1',
+  balls1: 'balls1',
+  wickets1: 'wickets1',
+  runs2: 'runs2',
+  balls2: 'balls2',
+  wickets2: 'wickets2',
   status: 'status'
 };
 

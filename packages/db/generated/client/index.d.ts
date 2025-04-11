@@ -992,25 +992,34 @@ export namespace Prisma {
 
   export type MatchesAvgAggregateOutputType = {
     id: number | null
-    runs: number | null
-    balls: number | null
-    wickets: number | null
+    runs1: number | null
+    balls1: number | null
+    wickets1: number | null
+    runs2: number | null
+    balls2: number | null
+    wickets2: number | null
   }
 
   export type MatchesSumAggregateOutputType = {
     id: number | null
-    runs: number | null
-    balls: number | null
-    wickets: number | null
+    runs1: number | null
+    balls1: number | null
+    wickets1: number | null
+    runs2: number | null
+    balls2: number | null
+    wickets2: number | null
   }
 
   export type MatchesMinAggregateOutputType = {
     id: number | null
     team1: string | null
     team2: string | null
-    runs: number | null
-    balls: number | null
-    wickets: number | null
+    runs1: number | null
+    balls1: number | null
+    wickets1: number | null
+    runs2: number | null
+    balls2: number | null
+    wickets2: number | null
     status: $Enums.MatchStatus | null
   }
 
@@ -1018,9 +1027,12 @@ export namespace Prisma {
     id: number | null
     team1: string | null
     team2: string | null
-    runs: number | null
-    balls: number | null
-    wickets: number | null
+    runs1: number | null
+    balls1: number | null
+    wickets1: number | null
+    runs2: number | null
+    balls2: number | null
+    wickets2: number | null
     status: $Enums.MatchStatus | null
   }
 
@@ -1028,9 +1040,12 @@ export namespace Prisma {
     id: number
     team1: number
     team2: number
-    runs: number
-    balls: number
-    wickets: number
+    runs1: number
+    balls1: number
+    wickets1: number
+    runs2: number
+    balls2: number
+    wickets2: number
     status: number
     _all: number
   }
@@ -1038,25 +1053,34 @@ export namespace Prisma {
 
   export type MatchesAvgAggregateInputType = {
     id?: true
-    runs?: true
-    balls?: true
-    wickets?: true
+    runs1?: true
+    balls1?: true
+    wickets1?: true
+    runs2?: true
+    balls2?: true
+    wickets2?: true
   }
 
   export type MatchesSumAggregateInputType = {
     id?: true
-    runs?: true
-    balls?: true
-    wickets?: true
+    runs1?: true
+    balls1?: true
+    wickets1?: true
+    runs2?: true
+    balls2?: true
+    wickets2?: true
   }
 
   export type MatchesMinAggregateInputType = {
     id?: true
     team1?: true
     team2?: true
-    runs?: true
-    balls?: true
-    wickets?: true
+    runs1?: true
+    balls1?: true
+    wickets1?: true
+    runs2?: true
+    balls2?: true
+    wickets2?: true
     status?: true
   }
 
@@ -1064,9 +1088,12 @@ export namespace Prisma {
     id?: true
     team1?: true
     team2?: true
-    runs?: true
-    balls?: true
-    wickets?: true
+    runs1?: true
+    balls1?: true
+    wickets1?: true
+    runs2?: true
+    balls2?: true
+    wickets2?: true
     status?: true
   }
 
@@ -1074,9 +1101,12 @@ export namespace Prisma {
     id?: true
     team1?: true
     team2?: true
-    runs?: true
-    balls?: true
-    wickets?: true
+    runs1?: true
+    balls1?: true
+    wickets1?: true
+    runs2?: true
+    balls2?: true
+    wickets2?: true
     status?: true
     _all?: true
   }
@@ -1171,9 +1201,12 @@ export namespace Prisma {
     id: number
     team1: string
     team2: string
-    runs: number
-    balls: number
-    wickets: number
+    runs1: number
+    balls1: number
+    wickets1: number
+    runs2: number
+    balls2: number
+    wickets2: number
     status: $Enums.MatchStatus
     _count: MatchesCountAggregateOutputType | null
     _avg: MatchesAvgAggregateOutputType | null
@@ -1200,9 +1233,12 @@ export namespace Prisma {
     id?: boolean
     team1?: boolean
     team2?: boolean
-    runs?: boolean
-    balls?: boolean
-    wickets?: boolean
+    runs1?: boolean
+    balls1?: boolean
+    wickets1?: boolean
+    runs2?: boolean
+    balls2?: boolean
+    wickets2?: boolean
     status?: boolean
   }, ExtArgs["result"]["matches"]>
 
@@ -1210,9 +1246,12 @@ export namespace Prisma {
     id?: boolean
     team1?: boolean
     team2?: boolean
-    runs?: boolean
-    balls?: boolean
-    wickets?: boolean
+    runs1?: boolean
+    balls1?: boolean
+    wickets1?: boolean
+    runs2?: boolean
+    balls2?: boolean
+    wickets2?: boolean
     status?: boolean
   }, ExtArgs["result"]["matches"]>
 
@@ -1220,9 +1259,12 @@ export namespace Prisma {
     id?: boolean
     team1?: boolean
     team2?: boolean
-    runs?: boolean
-    balls?: boolean
-    wickets?: boolean
+    runs1?: boolean
+    balls1?: boolean
+    wickets1?: boolean
+    runs2?: boolean
+    balls2?: boolean
+    wickets2?: boolean
     status?: boolean
   }, ExtArgs["result"]["matches"]>
 
@@ -1230,13 +1272,16 @@ export namespace Prisma {
     id?: boolean
     team1?: boolean
     team2?: boolean
-    runs?: boolean
-    balls?: boolean
-    wickets?: boolean
+    runs1?: boolean
+    balls1?: boolean
+    wickets1?: boolean
+    runs2?: boolean
+    balls2?: boolean
+    wickets2?: boolean
     status?: boolean
   }
 
-  export type MatchesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "team1" | "team2" | "runs" | "balls" | "wickets" | "status", ExtArgs["result"]["matches"]>
+  export type MatchesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "team1" | "team2" | "runs1" | "balls1" | "wickets1" | "runs2" | "balls2" | "wickets2" | "status", ExtArgs["result"]["matches"]>
 
   export type $MatchesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Matches"
@@ -1245,9 +1290,12 @@ export namespace Prisma {
       id: number
       team1: string
       team2: string
-      runs: number
-      balls: number
-      wickets: number
+      runs1: number
+      balls1: number
+      wickets1: number
+      runs2: number
+      balls2: number
+      wickets2: number
       status: $Enums.MatchStatus
     }, ExtArgs["result"]["matches"]>
     composites: {}
@@ -1675,9 +1723,12 @@ export namespace Prisma {
     readonly id: FieldRef<"Matches", 'Int'>
     readonly team1: FieldRef<"Matches", 'String'>
     readonly team2: FieldRef<"Matches", 'String'>
-    readonly runs: FieldRef<"Matches", 'Int'>
-    readonly balls: FieldRef<"Matches", 'Int'>
-    readonly wickets: FieldRef<"Matches", 'Int'>
+    readonly runs1: FieldRef<"Matches", 'Int'>
+    readonly balls1: FieldRef<"Matches", 'Int'>
+    readonly wickets1: FieldRef<"Matches", 'Int'>
+    readonly runs2: FieldRef<"Matches", 'Int'>
+    readonly balls2: FieldRef<"Matches", 'Int'>
+    readonly wickets2: FieldRef<"Matches", 'Int'>
     readonly status: FieldRef<"Matches", 'MatchStatus'>
   }
     
@@ -3059,9 +3110,12 @@ export namespace Prisma {
     id: 'id',
     team1: 'team1',
     team2: 'team2',
-    runs: 'runs',
-    balls: 'balls',
-    wickets: 'wickets',
+    runs1: 'runs1',
+    balls1: 'balls1',
+    wickets1: 'wickets1',
+    runs2: 'runs2',
+    balls2: 'balls2',
+    wickets2: 'wickets2',
     status: 'status'
   };
 
@@ -3128,9 +3182,12 @@ export namespace Prisma {
     id?: IntFilter<"Matches"> | number
     team1?: StringFilter<"Matches"> | string
     team2?: StringFilter<"Matches"> | string
-    runs?: IntFilter<"Matches"> | number
-    balls?: IntFilter<"Matches"> | number
-    wickets?: IntFilter<"Matches"> | number
+    runs1?: IntFilter<"Matches"> | number
+    balls1?: IntFilter<"Matches"> | number
+    wickets1?: IntFilter<"Matches"> | number
+    runs2?: IntFilter<"Matches"> | number
+    balls2?: IntFilter<"Matches"> | number
+    wickets2?: IntFilter<"Matches"> | number
     status?: EnumMatchStatusFilter<"Matches"> | $Enums.MatchStatus
   }
 
@@ -3138,9 +3195,12 @@ export namespace Prisma {
     id?: SortOrder
     team1?: SortOrder
     team2?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
     status?: SortOrder
   }
 
@@ -3151,9 +3211,12 @@ export namespace Prisma {
     NOT?: MatchesWhereInput | MatchesWhereInput[]
     team1?: StringFilter<"Matches"> | string
     team2?: StringFilter<"Matches"> | string
-    runs?: IntFilter<"Matches"> | number
-    balls?: IntFilter<"Matches"> | number
-    wickets?: IntFilter<"Matches"> | number
+    runs1?: IntFilter<"Matches"> | number
+    balls1?: IntFilter<"Matches"> | number
+    wickets1?: IntFilter<"Matches"> | number
+    runs2?: IntFilter<"Matches"> | number
+    balls2?: IntFilter<"Matches"> | number
+    wickets2?: IntFilter<"Matches"> | number
     status?: EnumMatchStatusFilter<"Matches"> | $Enums.MatchStatus
   }, "id">
 
@@ -3161,9 +3224,12 @@ export namespace Prisma {
     id?: SortOrder
     team1?: SortOrder
     team2?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
     status?: SortOrder
     _count?: MatchesCountOrderByAggregateInput
     _avg?: MatchesAvgOrderByAggregateInput
@@ -3179,9 +3245,12 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Matches"> | number
     team1?: StringWithAggregatesFilter<"Matches"> | string
     team2?: StringWithAggregatesFilter<"Matches"> | string
-    runs?: IntWithAggregatesFilter<"Matches"> | number
-    balls?: IntWithAggregatesFilter<"Matches"> | number
-    wickets?: IntWithAggregatesFilter<"Matches"> | number
+    runs1?: IntWithAggregatesFilter<"Matches"> | number
+    balls1?: IntWithAggregatesFilter<"Matches"> | number
+    wickets1?: IntWithAggregatesFilter<"Matches"> | number
+    runs2?: IntWithAggregatesFilter<"Matches"> | number
+    balls2?: IntWithAggregatesFilter<"Matches"> | number
+    wickets2?: IntWithAggregatesFilter<"Matches"> | number
     status?: EnumMatchStatusWithAggregatesFilter<"Matches"> | $Enums.MatchStatus
   }
 
@@ -3232,9 +3301,12 @@ export namespace Prisma {
   export type MatchesCreateInput = {
     team1: string
     team2: string
-    runs: number
-    balls: number
-    wickets: number
+    runs1: number
+    balls1: number
+    wickets1: number
+    runs2: number
+    balls2: number
+    wickets2: number
     status: $Enums.MatchStatus
   }
 
@@ -3242,18 +3314,24 @@ export namespace Prisma {
     id?: number
     team1: string
     team2: string
-    runs: number
-    balls: number
-    wickets: number
+    runs1: number
+    balls1: number
+    wickets1: number
+    runs2: number
+    balls2: number
+    wickets2: number
     status: $Enums.MatchStatus
   }
 
   export type MatchesUpdateInput = {
     team1?: StringFieldUpdateOperationsInput | string
     team2?: StringFieldUpdateOperationsInput | string
-    runs?: IntFieldUpdateOperationsInput | number
-    balls?: IntFieldUpdateOperationsInput | number
-    wickets?: IntFieldUpdateOperationsInput | number
+    runs1?: IntFieldUpdateOperationsInput | number
+    balls1?: IntFieldUpdateOperationsInput | number
+    wickets1?: IntFieldUpdateOperationsInput | number
+    runs2?: IntFieldUpdateOperationsInput | number
+    balls2?: IntFieldUpdateOperationsInput | number
+    wickets2?: IntFieldUpdateOperationsInput | number
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
   }
 
@@ -3261,9 +3339,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     team1?: StringFieldUpdateOperationsInput | string
     team2?: StringFieldUpdateOperationsInput | string
-    runs?: IntFieldUpdateOperationsInput | number
-    balls?: IntFieldUpdateOperationsInput | number
-    wickets?: IntFieldUpdateOperationsInput | number
+    runs1?: IntFieldUpdateOperationsInput | number
+    balls1?: IntFieldUpdateOperationsInput | number
+    wickets1?: IntFieldUpdateOperationsInput | number
+    runs2?: IntFieldUpdateOperationsInput | number
+    balls2?: IntFieldUpdateOperationsInput | number
+    wickets2?: IntFieldUpdateOperationsInput | number
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
   }
 
@@ -3271,18 +3352,24 @@ export namespace Prisma {
     id?: number
     team1: string
     team2: string
-    runs: number
-    balls: number
-    wickets: number
+    runs1: number
+    balls1: number
+    wickets1: number
+    runs2: number
+    balls2: number
+    wickets2: number
     status: $Enums.MatchStatus
   }
 
   export type MatchesUpdateManyMutationInput = {
     team1?: StringFieldUpdateOperationsInput | string
     team2?: StringFieldUpdateOperationsInput | string
-    runs?: IntFieldUpdateOperationsInput | number
-    balls?: IntFieldUpdateOperationsInput | number
-    wickets?: IntFieldUpdateOperationsInput | number
+    runs1?: IntFieldUpdateOperationsInput | number
+    balls1?: IntFieldUpdateOperationsInput | number
+    wickets1?: IntFieldUpdateOperationsInput | number
+    runs2?: IntFieldUpdateOperationsInput | number
+    balls2?: IntFieldUpdateOperationsInput | number
+    wickets2?: IntFieldUpdateOperationsInput | number
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
   }
 
@@ -3290,9 +3377,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     team1?: StringFieldUpdateOperationsInput | string
     team2?: StringFieldUpdateOperationsInput | string
-    runs?: IntFieldUpdateOperationsInput | number
-    balls?: IntFieldUpdateOperationsInput | number
-    wickets?: IntFieldUpdateOperationsInput | number
+    runs1?: IntFieldUpdateOperationsInput | number
+    balls1?: IntFieldUpdateOperationsInput | number
+    wickets1?: IntFieldUpdateOperationsInput | number
+    runs2?: IntFieldUpdateOperationsInput | number
+    balls2?: IntFieldUpdateOperationsInput | number
+    wickets2?: IntFieldUpdateOperationsInput | number
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
   }
 
@@ -3371,26 +3461,35 @@ export namespace Prisma {
     id?: SortOrder
     team1?: SortOrder
     team2?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
     status?: SortOrder
   }
 
   export type MatchesAvgOrderByAggregateInput = {
     id?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
   }
 
   export type MatchesMaxOrderByAggregateInput = {
     id?: SortOrder
     team1?: SortOrder
     team2?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
     status?: SortOrder
   }
 
@@ -3398,17 +3497,23 @@ export namespace Prisma {
     id?: SortOrder
     team1?: SortOrder
     team2?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
     status?: SortOrder
   }
 
   export type MatchesSumOrderByAggregateInput = {
     id?: SortOrder
-    runs?: SortOrder
-    balls?: SortOrder
-    wickets?: SortOrder
+    runs1?: SortOrder
+    balls1?: SortOrder
+    wickets1?: SortOrder
+    runs2?: SortOrder
+    balls2?: SortOrder
+    wickets2?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {

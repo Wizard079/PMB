@@ -21,13 +21,16 @@ enum MatchStatus {
 }
 
 model Matches {
-  id      Int         @id @default(autoincrement())
-  team1   String
-  team2   String
-  runs    Int
-  balls   Int
-  wickets Int
-  status  MatchStatus
+  id       Int         @id @default(autoincrement())
+  team1    String
+  team2    String
+  runs1    Int
+  balls1   Int
+  wickets1 Int
+  runs2    Int
+  balls2   Int
+  wickets2 Int
+  status   MatchStatus
 }
 
 model Message {
