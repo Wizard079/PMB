@@ -1,4 +1,8 @@
 {
   "is_task_list_visible": true,
+<<<<<<< HEAD
   "active_task": "ws-server#dev"
+=======
+  "active_task": "broker#dev"
+>>>>>>> 4898a6d58d62189d7043ad38753566324e3dfd13
 }
