@@ -1,17 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import { Bell, X, ArrowLeftCircle } from 'lucide-react';
-import axios from "axios"
+import axios, { all } from "axios"
 
 
+interface wsData {
+  topic: string,
+  messageContent: string,
+
+}
 interface Match {
   id: number
   team1: string
   team2: string
-  runs: number
-  balls: number
-  wickets: number
+  status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED"
+  runs1: number
+  balls1: number
+  wickets1: number
+  runs2: number
+  balls2: number
+  wickets2: number
 }
-
 type Score = {
   team1Name: string;
   team2Name: string;
@@ -20,18 +28,12 @@ type Score = {
   matchName: string;
 };
 
-type Msg = {
-  id: number;
-  type: 'pub' | 'sub';
-  topic: string;
-  limit?: number;
-  method?: 'at_least_once' | 'max_once';
-  messageContent?: any;
-};
+
 
 function App() {
   const [allMatches, setAllMatches] = useState<Match[]>([]);
   const [matchScore, setMatchScore] = useState<Score | null>(null);
+  // const [matchStatus, setMatchStatus] = useState<MatchStatus | null>(null);
   const [selectedMatchId, setSelectedMatchId] = useState<number | null>(null);
   const [notifications, setNotifications] = useState<string[]>([]);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -44,16 +46,24 @@ function App() {
       console.log('WebSocket connection established');
     };
     ws.current.onmessage = (event: MessageEvent) => {
-      const data: Msg = JSON.parse(event.data);
+      const data: wsData = JSON.parse(event.data);
+      const msg = JSON.parse(data.messageContent);
       console.log('Received message:', data);
-      if (data.topic === 'score') {
-        setMatchScore(data.messageContent);
-        setSelectedMatchId(data.id);
+      if (msg.status === "NOT_STARTED") {
+        setAllMatches(() => {
+          return allMatches.map(match => {
+            if (String(match.id) === data.topic) {
+              return { ...match, status: "IN_PROGRESS" }; // ← return the updated match
+            } else {
+              return match;
+            }
+          });
+        });
       } else if (data.topic === 'notification') {
         setNotifications((prev) => [...prev, data.messageContent]);
       }
     };
-  }, []);
+  }, [allMatches]);
 
   useEffect(() => {
     async function fetchMatches() {
@@ -66,9 +76,11 @@ function App() {
 
   function subscribe(id: string) {
     if (ws.current) {
-      console.log("Subscribing to:", id);
-      ws.current.send(JSON.stringify({ type: 'sub', topic: id }));
-      alert(`Subscribed to Match Id: ${id}`)
+      console.log("Subscribe to ", id);
+      ws.current.send(JSON.stringify({ topic: id }));
+    }
+    else {
+      alert('fail to subscribe')
     }
   }
 
@@ -162,6 +174,7 @@ function App() {
                 >
                   <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} VS {match.team2}</h2>
                   <p className="text-sm text-gray-300 text-center">{match.id}</p>
+                  <p className="text-sm text-gray-300 text-center">{match.status}</p>
                 </li>
               ))}
             </ul>
