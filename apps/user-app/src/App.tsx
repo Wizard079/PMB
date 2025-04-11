@@ -47,13 +47,33 @@ function App() {
     };
     ws.current.onmessage = (event: MessageEvent) => {
       const data: wsData = JSON.parse(event.data);
-      const msg = JSON.parse(data.messageContent);
-      console.log('Received message:', data);
+      const msg: Match = JSON.parse(data.messageContent);
+      console.log('Received message:', msg.status, msg);
       if (msg.status === "NOT_STARTED") {
         setAllMatches(() => {
           return allMatches.map(match => {
             if (String(match.id) === data.topic) {
               return { ...match, status: "IN_PROGRESS" }; // ← return the updated match
+            } else {
+              return match;
+            }
+          });
+        });
+      } else if (msg.status == "IN_PROGRESS") {
+        console.log("in progress  : )")
+        setAllMatches(() => {
+          return allMatches.map(match => {
+            if (String(match.id) === data.topic) {
+              return {
+                ...match,
+                runs1: msg.run1,
+                runs2: msg.runs2,
+                balls1: msg.balls1,
+                balls2: msg.balls2,
+                wickets1: msg.wickets1,
+                wickets2: msg.wickets2,
+                status: "IN_PROGRESS"
+              }; // ← return the updated match
             } else {
               return match;
             }
@@ -175,6 +195,23 @@ function App() {
                   <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} VS {match.team2}</h2>
                   <p className="text-sm text-gray-300 text-center">{match.id}</p>
                   <p className="text-sm text-gray-300 text-center">{match.status}</p>
+
+                  {
+                    match.status === "IN_PROGRESS" && (
+                      <>
+                        <div className="flex gap-20 justify-between">
+                          <div className="text-[20px] text-white">{match?.runs1}/{match?.wickets1} in {Math.floor(match?.balls1 / 6)}.{match?.balls1 % 6}</div>
+                          <div className="text-[20px] text-white">{match?.runs2}/{match?.wickets2} in {Math.floor(match?.balls2 / 6)}.{match?.balls2 % 6}</div>
+                        </div>
+                      </>
+                    )
+                  }
+                  {
+                    match.status === "COMPLETED" && (
+
+                      <div className="text-[20px] text-red-900">Match Completed</div>
+                    )
+                  }
                 </li>
               ))}
             </ul>

@@ -95,7 +95,6 @@ function App() {
     if (currentMatch) {
       if (currentMatch.balls1 < NUM_OVERS * 6 && currentMatch.wickets1 < 10) {
         if (ball === "W") {
-
           setCurrentMatch((match) => {
             if (!match) return null;
             axios.post(`http://localhost:3000/publish`, {
@@ -230,7 +229,7 @@ function App() {
         }
 
         
-      } else if (currentMatch.balls2 < NUM_OVERS * 6 || currentMatch.wickets2 < 10) {
+      } else if (currentMatch.balls2 < NUM_OVERS * 6 && currentMatch.wickets2 < 10) {
         if (ball === "W") {
           let customStat = "IN_PROGRESS"
           if (currentWickets + 1 === 10 || currentBall === NUM_OVERS * 6) customStat = "COMPLETED"
