@@ -108,7 +108,6 @@ app.post("/subscribe", async (req, res) => {
   const topic = req.body.topic;
   const limit = 6; // can change this latter now just hardcoding it for now
   if (typeof topic === "string") {
-    // console.log("log the req.ip is : ", req.ip, wsSubscribedTopics[topic]);
     if (wsSubscribedTopics[topic]?.includes(req.ip as string)) {
       res.status(400).json({ error: "Already subscribed" });
       return;
@@ -120,6 +119,7 @@ app.post("/subscribe", async (req, res) => {
     wsSubscribedTopics[topic].push(req.ip as string);
     const messages = await getMessagesFromDatabase(topic, limit);
     // console.log("Current message : ", messages);
+    console.log("log the req.ip is : ", req.ip, req.url, wsSubscribedTopics);
     res.status(200).json({ messages });
   } else {
     res.status(400).json({ error: "Invalid topic" });
@@ -127,16 +127,21 @@ app.post("/subscribe", async (req, res) => {
 });
 
 app.get("/unsubscribe", (req, res) => {
+  if (Object.keys(wsSubscribedTopics).length === 0) {
+    res
+      .status(400)
+      .json({ msg: "No active subscriptions to unsubscribe from." });
+    return;
+  }
   Object.keys(wsSubscribedTopics).forEach((topic) => {
     if (Array.isArray(wsSubscribedTopics[topic])) {
       wsSubscribedTopics[topic] = wsSubscribedTopics[topic].filter(
         (ip) => ip !== req.ip
       );
     } else {
-      console.log(`No subscribers for topic: ${topic}`);
+      console.log(`log : No subscribers for topic: ${topic}`);
     }
   });
-  console.log("Unsubscribe done ");
   res.status(200).json({ msg: "Unsubscribe done" });
 });
 
