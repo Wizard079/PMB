@@ -66,7 +66,7 @@ function App() {
             if (String(match.id) === data.topic) {
               return {
                 ...match,
-                runs1: msg.run1,
+                runs1: msg.runs1,
                 runs2: msg.runs2,
                 balls1: msg.balls1,
                 balls2: msg.balls2,
@@ -79,8 +79,19 @@ function App() {
             }
           });
         });
-      } else if (data.topic === 'notification') {
+      } 
+      else if (data.topic === 'notification') {
         setNotifications((prev) => [...prev, data.messageContent]);
+      }else if(msg.status === "COMPLETED"){
+        setAllMatches(() => {
+          return allMatches.map(match => {
+            if (String(match.id) === data.topic) {
+              return { ...match, status: "COMPLETED" }; // ← return the updated match
+            } else {
+              return match;
+            }
+          });
+        });
       }
     };
   }, [allMatches]);
@@ -94,8 +105,10 @@ function App() {
     fetchMatches()
   }, [])
 
-  function subscribe(id: string) {
+  function subscribe(id: string, match: Match) {
     if (ws.current) {
+      // if(id !== 'notification') 
+      alert('Subscribed to ' + match.team1 + " vs " + match.team2);
       console.log("Subscribe to ", id);
       ws.current.send(JSON.stringify({ topic: id }));
     }
@@ -119,9 +132,9 @@ function App() {
           <span className="text-4xl">🏏</span>
           <h1 className="text-3xl font-bold text-blue-300">Cricket Fever</h1>
         </div>
-        <div className="flex gap-4 mt-4 sm:mt-0">
+        {/* <div className="flex gap-4 mt-4 sm:mt-0">
           <button
-            onClick={() => subscribe('notification')}
+            onClick={() => subscribe('notification', { id: 0, team1: "", team2: "", status: "NOT_STARTED", runs1: 0, balls1: 0, wickets1: 0, runs2: 0, balls2: 0, wickets2: 0 })}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
           >
             Turn on Notifications
@@ -133,11 +146,10 @@ function App() {
             <Bell className="w-5 h-5" />
             <span>Notifications</span>
           </button>
-        </div>
+        </div> */}
       </header>
 
-      {/* Notifications Panel */}
-      {isPanelOpen && (
+      {/* {isPanelOpen && (
         <div className="fixed top-0 right-0 h-full w-80 bg-gray-800 shadow-lg p-4 overflow-y-auto z-50">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Notifications</h2>
@@ -158,7 +170,7 @@ function App() {
             ))
           )}
         </div>
-      )}
+      )} */}
 
       {/* Main Content: Centered Matches / Live Score */}
       <main className="flex-grow flex items-center justify-center">
@@ -189,15 +201,15 @@ function App() {
               {allMatches.map((match) => (
                 <li
                   key={match.id}
-                  onClick={() => subscribe(match.id.toString())}
+                  onClick={() => subscribe(match.id.toString() , match)}
                   className="cursor-pointer p-4 bg-gray-700 rounded hover:bg-gray-600 transition-colors w-full max-w-md"
                 >
-                  <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} VS {match.team2}</h2>
+                  <h2 className="text-xl font-semibold text-blue-200 text-center">{match.team1} <span className='text-[15px]'>vs</span> {match.team2}</h2>
                   <p className="text-sm text-gray-300 text-center">{match.id}</p>
                   <p className="text-sm text-gray-300 text-center">{match.status}</p>
 
                   {
-                    match.status === "IN_PROGRESS" && (
+                   (match.status === "IN_PROGRESS") && (
                       <>
                         <div className="flex gap-20 justify-between">
                           <div className="text-[20px] text-white">{match?.runs1}/{match?.wickets1} in {Math.floor(match?.balls1 / 6)}.{match?.balls1 % 6}</div>
@@ -206,12 +218,12 @@ function App() {
                       </>
                     )
                   }
-                  {
+                  {/* {
                     match.status === "COMPLETED" && (
 
                       <div className="text-[20px] text-red-900">Match Completed</div>
                     )
-                  }
+                  } */}
                 </li>
               ))}
             </ul>
@@ -221,7 +233,7 @@ function App() {
 
       {/* Footer with a Cricket Theme Message */}
       <footer className="mt-10 text-gray-500 text-sm text-center">
-        <p>Powered by Cricket Live Scores</p>
+        <p>Powered by Cricket Fever Live Scores</p>
       </footer>
     </div>
   );

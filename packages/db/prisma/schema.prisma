@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:/home/badboy/myEnv/tmp/PMB/packages/db/prisma/dev.db"
+  url      = "file:/home/adi/Desktop/updated_cricket_fever/PMB/packages/db/prisma/dev.db"
 }
 
 enum MatchStatus {

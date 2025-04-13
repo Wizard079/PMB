@@ -3,10 +3,13 @@ CREATE TABLE "Matches" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "team1" TEXT NOT NULL,
     "team2" TEXT NOT NULL,
-    "runs" INTEGER NOT NULL,
-    "balls" INTEGER NOT NULL,
-    "wickets" INTEGER NOT NULL,
-    "status" TEXT NOT NULL
+    "runs1" INTEGER NOT NULL DEFAULT 0,
+    "balls1" INTEGER NOT NULL DEFAULT 0,
+    "wickets1" INTEGER NOT NULL DEFAULT 0,
+    "runs2" INTEGER NOT NULL DEFAULT 0,
+    "balls2" INTEGER NOT NULL DEFAULT 0,
+    "wickets2" INTEGER NOT NULL DEFAULT 0,
+    "status" TEXT NOT NULL DEFAULT 'NOT_STARTED'
 );
 
 -- CreateTable

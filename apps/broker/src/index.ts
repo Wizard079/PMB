@@ -83,7 +83,7 @@ app.post("/match", async (req: Request, res: Response) => {
     });
 
     if (!existingMatch) {
-      await prisma.matches.create({
+      const match = await prisma.matches.create({
         data: {
           wickets1: 0,
           wickets2: 0,
@@ -96,7 +96,7 @@ app.post("/match", async (req: Request, res: Response) => {
           status: MatchStatus.NOT_STARTED,
         },
       });
-      return res.status(200).json({ message: "Match created" });
+      return res.status(200).json({ message: "Match created", match });
     }
   }
   return res.status(400).json({ error: "Invalid match data" });
